@@ -1,0 +1,116 @@
+package com.devjansen.usuario.business.converter;
+
+import com.devjansen.usuario.business.dtos.EnderecoDTO;
+import com.devjansen.usuario.business.dtos.TelefoneDTO;
+import com.devjansen.usuario.business.dtos.UsuarioDTO;
+import com.devjansen.usuario.infrastructure.entity.Endereco;
+import com.devjansen.usuario.infrastructure.entity.Telefone;
+import com.devjansen.usuario.infrastructure.entity.Usuario;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+
+public class UsuarioConverter {
+
+    // Metodos para converter UsuarioDto para Usuario
+
+    //metodo para recebe os dados do UsuarioDTO e retorna um Usuario
+    public Usuario paraUsuario(UsuarioDTO usuarioDTO) {
+
+        return Usuario.builder()
+                .nome(usuarioDTO.getNome())
+                .senha(usuarioDTO.getSenha())
+                .email(usuarioDTO.getEmail())
+                .enderecos(paraListaEndereco(usuarioDTO.getEnderecos()))
+                .telefones(paraListaTelefone(usuarioDTO.getTelefones()))
+                .build();
+
+    }
+
+    //recebe a lista de EnderecoDTO e retorna uma lista de Endereco
+    public List<Endereco> paraListaEndereco(List<EnderecoDTO> enderecoDTO) {
+
+        return enderecoDTO.stream().map(this::paraEndereco).toList();
+
+    }
+
+    //recebe um EnderecoDTO e retorna um Endereco
+    public Endereco paraEndereco(EnderecoDTO enderecoDTO) {
+        return Endereco.builder()
+                .logradouro(enderecoDTO.getLogradouro())
+                .numero(enderecoDTO.getNumero())
+                .complemento(enderecoDTO.getComplemento())
+                .bairro(enderecoDTO.getBairro())
+                .cidade(enderecoDTO.getCidade())
+                .cep(enderecoDTO.getCep())
+                .estado(enderecoDTO.getEstado())
+                .build();
+    }
+
+    //recebe a lista de TelefoneDTO e retorna uma lista de Telefone
+    public List<Telefone> paraListaTelefone(List<TelefoneDTO> telefoneDTO) {
+            return telefoneDTO.stream().map(this::paraTelefone).toList();
+
+    }
+
+    //recebe um TelefoneDTO e retorna um Telefone
+    public Telefone paraTelefone(TelefoneDTO telefoneDTO) {
+        return Telefone.builder()
+                .ddd(telefoneDTO.getDdd())
+                .numero(telefoneDTO.getNumero())
+                .build();
+
+    }
+
+
+    // Metodos para converter Usuario para UsuarioDTO
+
+    //metodo para recebe os dados do Usuario e retorna um UsuarioDTO
+    public UsuarioDTO paraUsuarioDTO(Usuario usuario) {
+
+        return UsuarioDTO.builder()
+                .nome(usuario.getNome())
+                .senha(usuario.getSenha())
+                .email(usuario.getEmail())
+                .enderecos(paraListaEnderecoDTO(usuario.getEnderecos()))
+                .telefones(paraListaTelefoneDTO(usuario.getTelefones()))
+                .build();
+    }
+
+    //recebe a lista de Endereco e retorna uma lista de EnderecoDTO
+    public List<EnderecoDTO> paraListaEnderecoDTO(List<Endereco> endereco) {
+        return endereco.stream().map(this::paraEnderecoDTO).toList();
+    }
+
+    //recebe um Endereco e retorna um EnderecoDTO
+    public EnderecoDTO paraEnderecoDTO(Endereco endereco) {
+        return EnderecoDTO.builder()
+                .logradouro(endereco.getLogradouro())
+                .numero(endereco.getNumero())
+                .complemento(endereco.getComplemento())
+                .bairro(endereco.getBairro())
+                .cidade(endereco.getCidade())
+                .cep(endereco.getCep())
+                .estado(endereco.getEstado())
+                .build();
+    }
+
+    //recebe a lista de Telefone e retorna uma lista de TelefoneDTO
+    public List<TelefoneDTO> paraListaTelefoneDTO(List<Telefone> telefone) {
+        return telefone.stream().map(this::paraTelefoneDTO).toList();
+
+    }
+
+    //recebe um Telefone e retorna um TelefoneDTO
+    public TelefoneDTO paraTelefoneDTO(Telefone telefone) {
+        return TelefoneDTO.builder()
+                .ddd(telefone.getDdd())
+                .numero(telefone.getNumero())
+                .build();
+
+    }
+
+
+}
