@@ -112,5 +112,17 @@ public class UsuarioConverter {
 
     }
 
+    //metodo para atualiza o usuario
+    public Usuario updateUsuario(UsuarioDTO usuarioDTO,  Usuario usuario) {
+        return Usuario.builder()
+                .id(usuario.getId())
+                .nome(usuarioDTO.getNome() != null ? usuarioDTO.getNome() : usuario.getNome())
+                .email(usuarioDTO.getEmail() != null ? usuarioDTO.getEmail() : usuario.getEmail())
+                .senha(usuarioDTO.getSenha() != null ? usuarioDTO.getSenha() : usuario.getSenha())
+                .telefones(usuario.getTelefones())
+                .enderecos(usuario.getEnderecos())
+                .build();
+    }
+
 
 }
