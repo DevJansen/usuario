@@ -91,22 +91,6 @@ public class UsuarioService {
         return usuarioConverter.paraEnderecoDTO(enderecoRepository.save(endereco));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public TelefoneDTO atualizaDadostelefone(Long idTelefone, TelefoneDTO telefoneDTO) {
 
         Telefone telefoneEntity = telefoneRepository.findById(idTelefone).orElseThrow( () ->
@@ -117,6 +101,3 @@ public class UsuarioService {
     }
 
 }
-
-
-//teste de java
